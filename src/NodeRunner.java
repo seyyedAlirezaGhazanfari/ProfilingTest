@@ -15,11 +15,13 @@ public class NodeRunner {
     private static void printLinkedList(Node head) {
         // Print the values of the linked list
         List<Integer> nodesList = head.getNodesList();
-
+        StringBuilder result = new StringBuilder();
         for (Integer value : nodesList) {
-            System.out.println(value + " ");
+            result.append(value).append("\n");
         }
+        System.out.println(result);
     }
+
     private static int getRandomNumber() {
         Random random = new Random();
         return random.nextInt(RAND_BOUND) + 1;

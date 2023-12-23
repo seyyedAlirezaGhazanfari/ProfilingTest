@@ -66,43 +66,34 @@ public class Node {
     }
 
     public static Node sortedInsert(Node head, int n) {
-        Node prevNode = null;
-        Node currentNode = head;
-
-        if (currentNode == null) {
+        if (head == null) {
             return new Node(n);
         }
 
+        Node currentNode = head;
+        Node prevNode = null;
         while (currentNode != null) {
             if (currentNode.getValue() >= n) {
-                Node newNode = new Node(n);
-                newNode.setNext(currentNode);
-                newNode.setPrev(prevNode);
-                break;
+                Node newNode = naiveInsert(n, currentNode, prevNode);
+                if (newNode.getPrev() == null) {
+                    head = newNode;
+                }
+                return head;
             }
             prevNode = currentNode;
             currentNode = currentNode.getNext();
-
-            if (currentNode == null) {
-                Node newNode = new Node(n);
-                newNode.setNext(null);
-                newNode.setPrev(prevNode);
-            }
         }
+
+        Node newNode = naiveInsert(n, currentNode, prevNode);
         return head;
     }
 
     public static boolean hasDuplicates(Node head) {
         Node nodeIter1 = head;
-        Node nodeIter2 = head;
         while (nodeIter1 != null) {
-            while (nodeIter2 != null) {
-                if (nodeIter1 != nodeIter2 && nodeIter2.getValue() == nodeIter1.getValue()) {
-                    return true;
-                }
-                nodeIter2 = nodeIter2.getNext();
+            if (nodeIter1.getNext() != null && nodeIter1.getValue() == nodeIter1.getNext().getValue()) {
+                return true;
             }
-            nodeIter2 = head;
             nodeIter1 = nodeIter1.getNext();
         }
         return false;
